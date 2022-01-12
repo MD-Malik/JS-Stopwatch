@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <style>
+            .stopwatch{
+                display: flex;
+                flex-direction: row;
+            }
+            h2{
+                margin-left: 10px;
+            }
+            button{
+                margin-left: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="heading">Stopwatch</h1>
+        <div class="stopwatch">
+        <h2></h2><h2></h2><h2>0</h2>
+        </div>
+        <button class="start">Start</button>
+        <button class="stop">Stop</button>
+        <button class="reset">Reset</button>
+    </body>
+</html>
+<script>
+    document.querySelector('.start').addEventListener("click",start_stopwatch);
+    document.querySelector('.reset').addEventListener("click",reset_stopwatch);
+    
+    var milisecond=0;
+    var second=0;
+    var minute=0;
+
+    function reset_stopwatch(){
+        clearInterval(myStopWatch)
+
+        milisecond=0;
+        second=0;
+        minute=0;
+
+        document.querySelectorAll('h2')[2].textContent=0;
+        document.querySelectorAll('h2')[1].textContent="";
+        document.querySelectorAll('h2')[0].textContent="";
+
+        
+    }
+
+    function start_stopwatch(){
+        document.querySelector('.start').setAttribute("class","dont_click")
+
+    
+    var myStopWatch=setInterval(() => {
+
+        if(milisecond==99){
+            milisecond=0;
+            second++;
+            if(second==59){
+                second=1;
+                minute++;
+            }
+        }
+        if(minute>0){
+        document.querySelectorAll('h2')[0].textContent=minute;
+        }
+        if(second>0){
+        document.querySelectorAll('h2')[1].textContent=second+"s";
+        }
+        document.querySelectorAll('h2')[2].textContent=++milisecond;
+
+        document.querySelector('.stop').addEventListener("click",stop_stopwatch);
+
+        document.querySelector('.reset').addEventListener("click",reset_stopwatch);
+
+        function stop_stopwatch(){
+            clearInterval(myStopWatch)
+            document.querySelector('.dont_click').setAttribute("class","start")
+        }
+        function reset_stopwatch(){
+            
+        clearInterval(myStopWatch)
+        
+        milisecond=0;
+        second=0;
+        minute=0;
+
+        document.querySelectorAll('h2')[2].textContent=0;
+        document.querySelectorAll('h2')[1].textContent="";
+        document.querySelectorAll('h2')[0].textContent="";
+        document.querySelector('.dont_click').setAttribute("class","start")
+
+    }
+
+    }, 10);
+    }
+    
+</script>
